@@ -1,14 +1,17 @@
 import React from 'react'
 import LOGO from '../../assets/Sitelogo.png';
+import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
     <footer className="text-gray-600 body-font border-t-2">
       <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
         <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-          <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+          <Link to='/'>
+          <div className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
             <img src={LOGO} style={{width:'45px'}}/>
             <span className="ml-3 text-2xl">Shoppy</span>
-          </a>
+          </div>
+          </Link>
           <p className="mt-2 text-sm text-gray-500">Shoppy is a Ecommerce Website</p>
         </div>
         <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
@@ -16,7 +19,14 @@ const Footer = () => {
             <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">CATEGORIES</h2>
             <nav className="list-none mb-10">
               <li>
+                <Link to='/about'>
                 <a className="text-gray-600 hover:text-gray-800">About Us</a>
+                </Link>
+              </li>
+              <li>
+                <Link to='/contact'>
+                <a className="text-gray-600 hover:text-gray-800">Contact Us</a>
+                </Link>
               </li>
               <li>
                 <a className="text-gray-600 hover:text-gray-800">Our Services</a>
