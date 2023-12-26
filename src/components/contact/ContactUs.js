@@ -1,55 +1,38 @@
-// ContactUs.js
 import React from 'react';
 
 const ContactUs = () => {
   return (
-    <div className="container mx-auto mt-10 mb-10">
-      <div className="max-w-2xl mx-auto bg-white p-8 shadow-md">
-        <h1 className="text-3xl font-semibold mb-6">Contact Us</h1>
-        <form>
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-600">
-              Your Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="mt-1 p-2 w-full border rounded-md"
-              placeholder="Enter your name"
-            />
+    <div className="sm:mt-14 lg:mt-0 py-5 h-screen flex items-center">
+      <div className="container mx-auto">
+        <div className="flex flex-col items-center text-center mb-3 mb-lg-5">
+          <span className="text-gray-500">Let's Talk</span>
+          <h2 className="text-4xl font-bold mb-3">Contact Us</h2>
+          <p className="text-lg">Thank you for choosing Shoppy. We look forward to serving you and making your shopping experience delightful!</p>
+        </div>
+        <div className="flex flex-col md:flex-row items-center justify-center">
+          <div className="w-full md:w-1/2 md:mr-4">
+            <form>
+              <div className="mb-4">
+                <input className="w-full px-4 py-3 bg-gray-100 rounded" placeholder="Full name" type="text"/>
+              </div>
+              <div className="mb-4">
+                <input className="w-full px-4 py-3 bg-gray-100 rounded" placeholder="Email address" type="email"/>
+              </div>
+              <div className="mb-4">
+                <textarea className="w-full px-4 py-3 bg-gray-100 rounded" placeholder="Your message" rows="5"></textarea>
+              </div>
+              <div className="w-full md:w-1/2">
+                <button className="w-full px-4 py-2 bg-[#00B377] text-white rounded" type="submit">Send message</button>
+              </div>
+            </form>
           </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-              Your Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="mt-1 p-2 w-full border rounded-md"
-              placeholder="Enter your email"
-            />
+          <div className="w-full md:w-1/2 sm:mt-4 ">
+            <div className="mt-4 md:mt-0"><img alt="Map" className="w-full h-auto" src="https://freefrontend.dev/assets/map-img-1.png"/></div>
+            <div className="mt-3">
+              <p className="text-gray-700">Shoppy Store, India.</p>
+            </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="message" className="block text-sm font-medium text-gray-600">
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              className="mt-1 p-2 w-full border rounded-md"
-              placeholder="Type your message"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="bg-[#00B377] text-white py-2 px-4 rounded-md hover:bg-[#009664] transition duration-300"
-          >
-            Send Message
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );
