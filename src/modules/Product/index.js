@@ -23,18 +23,26 @@ const Product = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [buttonColor, setButtonColor] = useState('black');
 
-  const handleFavorite = () => {
-    // Toggle favorite state
-    setIsFavorite((prevFavorite) => !prevFavorite);
-
-    // Toggle color
-    const newColor = isFavorite ? 'black' : '#00B377';
-    setButtonColor(newColor);
-
-    // Display toast
-    const toastMessage = isFavorite ? 'Product removed from Favorites 💔' : 'Product added to Favorites ❤️';
-    toast.success(toastMessage);
+  const handleFavorite = (product) => {
+    console.log(product);
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const isProductInFavorites = favorites.find((item) => item.id === product.id);
+  
+    if (isProductInFavorites) {
+      // If product is already in favorites, you may want to remove it from favorites
+      const updatedFavorites = favorites.filter((item) => item.id !== product.id);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      toast.success('Product removed from Favorites 💔');
+    } else {
+      // If product is not in favorites, add it to favorites
+      localStorage.setItem(
+        'favorites',
+        JSON.stringify([...favorites, { ...product }])
+      );
+      toast.success('Product added to Favorites ❤️');
+    }
   };
+  
 
   const handleCart = (product, redirect) => {
     console.log(product);
@@ -140,11 +148,8 @@ const Product = () => {
                     <button className="flex ml-auto text-white bg-[#00B377] border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded mr-2" onClick={() => handleCart(product, true)}>Buy it now</button>
                     <button className="flex ml-auto border border-[#00B377] py-2 px-6 focus:outline-none hover:bg-indigo-600 hover:text-white rounded" onClick={() => handleCart(product)}>Add to cart</button>
                   </div>
-                  <ToastContainer />
-                </>
-                <>
                   <button className={`rounded-full w-10 h-10 p-0 border-0 inline-flex items-center justify-center  ml-4`} style={{ color: `${buttonColor}` }}
-                    onClick={handleFavorite}
+                    onClick={() => handleFavorite(product)}
                   >
                     <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-5 h-5" viewBox="0 0 24 24">
                       <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>

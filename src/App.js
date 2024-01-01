@@ -10,6 +10,8 @@ import CategoryProducts from './modules/CategoryProducts';
 import Cart from './modules/Cart';
 import ContactUs from './components/contact/ContactUs';
 import AboutUs from './components/AboutUS/AboutUs';
+import FavritesProduct from './components/Favrites';
+import FavoritesList from './components/Favrites';
 
 function App() {
   return (
@@ -23,7 +25,8 @@ function App() {
         <Route path="cart" element={<Cart/>} />
         <Route path="*" element={<div>404</div>} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="/about" element={<AboutUs/>}/>
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/favorites" element={ <FavoritesList/>} />
       </Routes>
       <Footer/>
     </div>

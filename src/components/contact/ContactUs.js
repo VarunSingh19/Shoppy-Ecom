@@ -1,6 +1,20 @@
+import { hasFormSubmit } from '@testing-library/user-event/dist/utils';
 import React from 'react';
+import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+
 
 const ContactUs = () => {
+  const [message, setMessage] = useState(false);
+  const handleSendMessage = () => {
+    setMessage((prevMessage) => !prevMessage);
+    const toastMessage = message ? 'Message has been sent!' : 'Message has been sent!';
+    toast.success(toastMessage);
+};
+  
   return (
     <div className="sm:mt-14 lg:mt-0 py-5 h-screen flex items-center">
       <div className="container mx-auto">
@@ -21,9 +35,12 @@ const ContactUs = () => {
               <div className="mb-4">
                 <textarea className="w-full px-4 py-3 bg-gray-100 rounded" placeholder="Your message" rows="5"></textarea>
               </div>
+              <>
               <div className="w-full md:w-1/2">
-                <button className="w-full px-4 py-2 bg-[#00B377] text-white rounded" type="submit">Send message</button>
-              </div>
+                  <button className="w-full px-4 py-2 bg-[#00B377] text-white rounded" type="submit" onClick={handleSendMessage }>Send message</button>
+                </div>
+                <ToastContainer/>
+              </>
             </form>
           </div>
           <div className="w-full md:w-1/2 sm:mt-4 ">

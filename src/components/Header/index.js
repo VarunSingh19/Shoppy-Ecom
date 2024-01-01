@@ -18,6 +18,10 @@ const navigations = [
   {
     name: 'Contact',
     path: '/contact'
+  },
+  {
+    name: '❤️Favorites',
+    path: '/favorites'
   }
 ]
 
