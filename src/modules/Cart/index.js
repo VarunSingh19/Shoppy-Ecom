@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import EmptyCart from '../../assets/emptycart.png';
+import { ToastContainer, toast } from 'react-toastify';
+
+
 const Cart = () => {
   const navigate = useNavigate()
   const [total, setTotal] = useState(0)
   const [promoCode, setPromoCode] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [isPromoCodeValid, setIsPromoCodeValid] = useState(true);
+
   const carts = JSON.parse(localStorage.getItem('cart')) || []
 
   useEffect(() => {
-    const total = carts.reduce((acc, item) => {
-      return acc + (item.price * item.quantity)
-    }, 0)
-    setTotal(total)
-  }, [carts])
+    const newTotal = carts.reduce((acc, item) => {
+      return acc + item.price * item.quantity;
+    }, 0);
+
+    const discountedTotal = promoCode === 'PRIYANKA' ? newTotal * 0.1 : newTotal;
+
+    setTotal(discountedTotal);
+  }, [carts, promoCode]);
 
   const handleInc = (id) => {
     const updatedCart = carts.map(item => {
@@ -48,20 +57,49 @@ const Cart = () => {
     navigate('/cart')
   }
 
+
+  const handleApplyPromoCode = () => {
+    if (promoCode === 'PRIYANKA') {
+      setDiscount(total * 0.9);
+      setIsPromoCodeValid(true); 
+      toast.success('PROMOCODE has been used Successfully..');
+    } else {
+      setDiscount(0);
+      setIsPromoCodeValid(false); 
+    }
+  };
+
+  const handleCheckout = () => {
+    localStorage.removeItem('cart');
+    toast.success('Order placed successfully!');
+
+    setTimeout(() => {
+      navigate('/cart');
+    }, 2000);
+  };
+
+
   if (carts.length === 0) {
     return (
-      <div className="container mt-5 flex flex-col items-center">
-      <div className="text-center">
-        <img
-          src={EmptyCart}
-          alt="Empty Cart Logo"
-          className="w-48 h-48 mx-auto"
-        />
-      </div>
-      <p className="text-center text-2xl mb-4" style={{fontWeight:'bold'}}>Your Cart is empty!</p>
-    </div>
+      <>
+        <div className="container mt-5 flex flex-col items-center">
+          <div className="text-center">
+            <img
+              src={EmptyCart}
+              alt="Empty Cart Logo"
+              className="w-48 h-48 mx-auto"
+            />
+          </div>
+          <p className="text-center text-2xl mb-4" style={{ fontWeight: 'bold' }}>Your Cart is empty!</p>
+          <Link to={'/products'} className="flex font-semibold text-indigo-600 text-2xl mt-10">
+
+            <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" /></svg>
+            Continue Shopping
+          </Link>
+        </div>
+      </>
     )
-      
+
   }
 
   return (
@@ -83,11 +121,11 @@ const Cart = () => {
               return (
                 <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
                   <div className="flex w-2/5">
-                      <Link to={`/products/${cart?.id}`}>
-                    <div className="lg:w-20 md:w-20">
-                      <img className="lg:h-24 md:h-24" src={cart?.image} alt={cart?.title} />
-                    </div>
-                      </Link>
+                    <Link to={`/products/${cart?.id}`}>
+                      <div className="lg:w-20 md:w-20">
+                        <img className="lg:h-24 md:h-24" src={cart?.image} alt={cart?.title} />
+                      </div>
+                    </Link>
                     <div className="flex flex-col justify-between ml-4 flex-grow">
                       <span className="font-bold text-sm">{cart?.title}</span>
                       <span className="text-[#00B377] text-xs capitalize">{cart?.category}</span>
@@ -133,21 +171,45 @@ const Cart = () => {
             <label className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
             <select className="block p-2 text-gray-600 w-full text-sm">
               <option>Standard shipping - $10.00</option>
-              <option>Express shipping - $20.00</option>
-              <option>Rocket shipping - $50.00</option>
             </select>
           </div>
-          <div className="py-10">
-            <label for="promo" className="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
-            <input type="text" id="promo" placeholder="Enter your code" className="p-2 text-sm w-full" />
-          </div>
-          <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase" disabled >Apply</button>
+          <>
+            <div className="py-10">
+              <label for="promo" className="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
+              <input
+                type="text"
+                id="promo"
+                placeholder="Enter your code"
+                className={`p-2 text-sm w-full ${!isPromoCodeValid && 'border-red-500'}`}
+                value={promoCode}
+                onChange={(e) => {
+                  setPromoCode(e.target.value);
+                  setIsPromoCodeValid(true);
+                }}
+              />
+            </div>
+            <button
+              className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase"
+              onClick={handleApplyPromoCode}
+            >
+              Apply
+            </button>
+            <ToastContainer />
+          </>
+          {!isPromoCodeValid && (
+            <p className="text-red-500 text-sm mt-2">Invalid promo code. Please enter a valid code.</p>
+          )}
           <div className="border-t mt-8">
             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
               <span>Total cost</span>
-              <span>${(total + 10).toFixed(2)}</span>
+              <span>${(total - discount + 10).toFixed(2)}</span>
             </div>
-            <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full" disabled>Checkout</button>
+            <button
+              className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
+              onClick={handleCheckout}
+            >
+              Checkout
+            </button>
           </div>
         </div>
 
