@@ -58,25 +58,34 @@ const Cart = () => {
   }
 
 
-  const handleApplyPromoCode = () => {
-    if (promoCode === 'PRIYANKA') {
-      setDiscount(total * 0.9);
-      setIsPromoCodeValid(true); 
-      toast.success('PROMOCODE has been used Successfully..');
-    } else {
-      setDiscount(0);
-      setIsPromoCodeValid(false); 
-    }
-  };
+ const handleApplyPromoCode = () => {
+  if (promoCode === 'PRIYANKA') {
+    setDiscount(total * 0.1);
+    setIsPromoCodeValid(true);
+    toast.success('PROMOCODE has been used Successfully...');
+  } else {
+    setDiscount(0);
+    setIsPromoCodeValid(false);
+    toast.error('Invalid promo code. Please enter a valid code.');
+  }
+};
 
-  const handleCheckout = () => {
-    localStorage.removeItem('cart');
-    toast.success('Order placed successfully!');
+  
+  
+const handleCheckout = () => {
+  toast.success('Redirecting to checkout page...');
 
-    setTimeout(() => {
-      navigate('/cart');
-    }, 2000);
-  };
+  const finalTotal = (total - discount + 10).toFixed(2);
+
+  setTimeout(() => {
+    // navigate('/checkout', { state: { finalTotal: (total - discount + 10).toFixed(2), discount, total } });
+    // Navigate immediately and pass the state
+  navigate('/checkout', { state: { finalTotal, discount, total } });
+  }, 2000);
+};
+
+
+
 
 
   if (carts.length === 0) {
@@ -177,16 +186,13 @@ const Cart = () => {
             <div className="py-10">
               <label for="promo" className="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
               <input
-                type="text"
-                id="promo"
-                placeholder="Enter your code"
-                className={`p-2 text-sm w-full ${!isPromoCodeValid && 'border-red-500'}`}
-                value={promoCode}
-                onChange={(e) => {
-                  setPromoCode(e.target.value);
-                  setIsPromoCodeValid(true);
-                }}
-              />
+              type="text"
+              id="promo"
+              placeholder="Enter your code"
+              className={`p-2 text-sm w-full ${!isPromoCodeValid && 'border-red-500'}`}
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+            />
             </div>
             <button
               className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase"
@@ -208,7 +214,7 @@ const Cart = () => {
               className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
               onClick={handleCheckout}
             >
-              Checkout
+             Proceed to Checkout
             </button>
           </div>
         </div>

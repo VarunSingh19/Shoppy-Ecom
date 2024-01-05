@@ -12,6 +12,7 @@ import ContactUs from './components/contact/ContactUs';
 import AboutUs from './components/AboutUS/AboutUs';
 import FavritesProduct from './components/Favrites';
 import FavoritesList from './components/Favrites';
+import Checkout from './modules/Checkout';
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
         <Route path="*" element={<div>404</div>} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/favorites" element={ <FavoritesList/>} />
+        <Route path="/favorites" element={<FavoritesList />} />
+        <Route path="/checkout" element={ <Checkout/>} />
       </Routes>
       <Footer/>
     </div>

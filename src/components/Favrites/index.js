@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CryHeart from '../../assets/cryheart.png';
+import CuteEmoji from '../../assets/hoverEmogi.jpeg';
 
 const FavoritesList = () => {
   const navigate = useNavigate();
   const [total, setTotal] = useState(0);
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  const [hoveredItemId, setHoveredItemId] = useState(null);
+
 
   useEffect(() => {
     const total = favorites.reduce((acc, item) => {
-      return acc + item.price; // Assuming you want the total price of all favorites
+      return acc + item.price; 
     }, 0);
     setTotal(total);
   }, [favorites]);
@@ -47,9 +50,21 @@ const FavoritesList = () => {
               <h2 className="font-semibold text-2xl">{favorites?.length} Items</h2>
             </div>
             {favorites?.map((favorite) => (
-              <div className="hover:bg-gray-100 px-6 py-5 text-center" key={favorite?.id}>
+              <div className="hover:bg-gray-100 px-6 py-5 text-center relative"
+                key={favorite?.id}
+                onMouseEnter={() => setHoveredItemId(favorite?.id)}
+                onMouseLeave={() => setHoveredItemId(null)}
+              >
+                 {hoveredItemId === favorite?.id && (
+                   <img
+                    src={CuteEmoji}
+                    alt="New Heart"
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                    style={{ width: '100px', height: '100px' }}
+                  />
+                )}
                 <div className="w-2/5 mx-auto">
-                  <Link to={`/products/${favorite?.id}`}>
+                <Link to={`/products/${favorite?.id}`}>
                     <div>
                       <img className="" src={favorite?.image} alt={favorite?.title} />
                     </div>

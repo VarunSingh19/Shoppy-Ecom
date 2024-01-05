@@ -22,26 +22,40 @@ const Product = () => {
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [buttonColor, setButtonColor] = useState('black');
-
+  
   const handleFavorite = (product) => {
-    console.log(product);
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     const isProductInFavorites = favorites.find((item) => item.id === product.id);
+    let newColor;
   
     if (isProductInFavorites) {
-      // If product is already in favorites, you may want to remove it from favorites
       const updatedFavorites = favorites.filter((item) => item.id !== product.id);
       localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
       toast.success('Product removed from Favorites 💔');
+      newColor = 'black';
     } else {
-      // If product is not in favorites, add it to favorites
       localStorage.setItem(
         'favorites',
         JSON.stringify([...favorites, { ...product }])
       );
       toast.success('Product added to Favorites ❤️');
+      newColor = '#00B377';
     }
+  
+    setIsFavorite(!isProductInFavorites); 
+    setButtonColor(newColor);
+  
+    localStorage.setItem(`buttonColor-${product.id}`, newColor);
   };
+  
+  useEffect(() => {
+    const storedColor = localStorage.getItem(`buttonColor-${product.id}`);
+    console.log('Color retrieved from local storage:', storedColor);
+    setButtonColor(storedColor || 'black'); 
+  }, [product.id]);
+  
+  
+  
   
 
   const handleCart = (product, redirect) => {
