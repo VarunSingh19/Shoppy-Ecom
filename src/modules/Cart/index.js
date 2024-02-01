@@ -18,7 +18,7 @@ const Cart = () => {
       return acc + item.price * item.quantity;
     }, 0);
 
-    const discountedTotal = promoCode === 'PRIYANKA' ? newTotal * 0.1 : newTotal;
+    const discountedTotal = promoCode === 'VARUN' ? newTotal * 0.1 : newTotal;
 
     setTotal(discountedTotal);
   }, [carts, promoCode]);
@@ -59,7 +59,7 @@ const Cart = () => {
 
 
  const handleApplyPromoCode = () => {
-  if (promoCode === 'PRIYANKA') {
+  if (promoCode === 'VARUN') {
     setDiscount(total * 0.1);
     setIsPromoCodeValid(true);
     toast.success('PROMOCODE has been used Successfully...');
@@ -223,5 +223,4 @@ const handleCheckout = () => {
     </div>
   )
 }
-
 export default Cart

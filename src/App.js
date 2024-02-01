@@ -10,9 +10,8 @@ import CategoryProducts from './modules/CategoryProducts';
 import Cart from './modules/Cart';
 import ContactUs from './components/contact/ContactUs';
 import AboutUs from './components/AboutUS/AboutUs';
-import FavritesProduct from './components/Favrites';
 import FavoritesList from './components/Favrites';
-import Checkout from './modules/Checkout';
+import Checkout from './modules/Checkout/Checkout';
 
 function App() {
   return (

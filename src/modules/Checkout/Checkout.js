@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { Link, useNavigate ,useLocation} from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+
 const Checkout = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,7 +18,60 @@ const Checkout = (props) => {
         state: '',
         phoneNumber: '',
         queryMessage: '',
+        pincode : '',
     });
+    const cities = [
+        'Mumbai',
+        'Pune',
+        'Nagpur',
+        'Nashik',
+        'Aurangabad',
+        'Solapur',
+        'Amravati',
+        'Kolhapur',
+        'Navi Mumbai',
+        'Thane',
+        'Akola',
+        'Jalgaon',
+        'Latur',
+        'Ahmednagar',
+        'Chandrapur',
+        'Dhule',
+        'Ichalkaranji',
+        'Sangli',
+        'Jalna',
+        'Beed',
+        'Parbhani',
+        'Osmanabad',
+        'Nanded',
+        'Satara',
+        'Ratnagiri',
+        'Sindhudurg',
+        'Palghar',
+        'Wardha',
+        'Yavatmal',
+        'Hingoli',
+        'Gondia',
+        'Washim',
+        'Buldana',
+        'Gadchiroli',
+        'Mumbai Suburban',
+        'Raigad',
+        'Ratnagiri',
+        'Sindhudurg',
+        'Palghar',
+        'Bid',
+        'Buldana',
+        'Gadchiroli',
+        'Wardha',
+        'Washim',
+        'Gondia',
+        'Hingoli',
+        'Nandurbar',
+        'Usmanabad',
+        'Kolaba'
+    ]; 
+    const states = ['Maharashtra']; 
 
     const handleChange = (e) => {
         setFormData({
@@ -39,7 +93,7 @@ const Checkout = (props) => {
 
     return (
         <div className="container mx-auto mt-10">
-            <div className="lg:w-1/2 mx-auto">
+            <div className="w-auto mx-5">
                 <h1 className="text-2xl font-semibold mb-6">Checkout</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -53,6 +107,7 @@ const Checkout = (props) => {
                             value={formData.fullName}
                             onChange={handleChange}
                             className="mt-1 p-2 w-full border rounded-md"
+                            placeholder='enter your fullname here'
                             required
                         />
                     </div>
@@ -67,12 +122,13 @@ const Checkout = (props) => {
                             value={formData.flatNumber}
                             onChange={handleChange}
                             className="mt-1 p-2 w-full border rounded-md"
+                            placeholder='enter your flat number here'
                             required
                         />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="buildingNumber" className="block text-sm font-medium text-gray-600">
-                            Building Number
+                            Building Number/Name
                         </label>
                         <input
                             type="text"
@@ -81,6 +137,7 @@ const Checkout = (props) => {
                             value={formData.buildingNumber}
                             onChange={handleChange}
                             className="mt-1 p-2 w-full border rounded-md"
+                            placeholder='enter your building number here'
                             required
                         />
                     </div>
@@ -95,6 +152,22 @@ const Checkout = (props) => {
                             value={formData.landmark}
                             onChange={handleChange}
                             className="mt-1 p-2 w-full border rounded-md"
+                            placeholder='enter your landmark here'
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="pincode" className="block text-sm font-medium text-gray-600">
+                            Pincode
+                        </label>
+                        <input
+                            type="text"
+                            id="pincode"
+                            name="pincode"
+                            value={formData.pincode}
+                            onChange={handleChange}
+                            className="mt-1 p-2 w-full border rounded-md"
+                            placeholder='enter your landmark here'
                             required
                         />
                     </div>
@@ -102,29 +175,41 @@ const Checkout = (props) => {
                         <label htmlFor="city" className="block text-sm font-medium text-gray-600">
                             City
                         </label>
-                        <input
-                            type="text"
+                        <select
                             id="city"
                             name="city"
                             value={formData.city}
                             onChange={handleChange}
                             className="mt-1 p-2 w-full border rounded-md"
                             required
-                        />
+                        >
+                            <option value="" disabled>Select your city</option>
+                            {cities.map((city) => (
+                                <option key={city} value={city}>
+                                    {city}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="mb-4">
                         <label htmlFor="state" className="block text-sm font-medium text-gray-600">
                             State
                         </label>
-                        <input
-                            type="text"
+                        <select
                             id="state"
                             name="state"
                             value={formData.state}
                             onChange={handleChange}
                             className="mt-1 p-2 w-full border rounded-md"
                             required
-                        />
+                        >
+                            <option value="" disabled>Select your state</option>
+                            {states.map((state) => (
+                                <option key={state} value={state}>
+                                    {state}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="mb-4">
                         <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-600">
@@ -137,6 +222,7 @@ const Checkout = (props) => {
                             value={formData.phoneNumber}
                             onChange={handleChange}
                             className="mt-1 p-2 w-full border rounded-md"
+                            placeholder='enter your phone number here'
                             required
                         />
                     </div>
@@ -151,6 +237,7 @@ const Checkout = (props) => {
                             onChange={handleChange}
                             rows="4"
                             className="mt-1 p-2 w-full border rounded-md"
+                            placeholder='enter your query here'
                         />
                     </div>
                     <div className="border-t mt-8 pt-4">

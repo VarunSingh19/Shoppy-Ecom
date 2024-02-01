@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CryHeart from '../../assets/cryheart.png';
-import CuteEmoji from '../../assets/hoverEmogi.jpeg';
+import CuteEmoji from '../../assets/hoverEmogi.png';
 
 const FavoritesList = () => {
   const navigate = useNavigate();
