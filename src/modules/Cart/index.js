@@ -18,7 +18,7 @@ const Cart = () => {
       return acc + item.price * item.quantity;
     }, 0);
 
-    const discountedTotal = promoCode === 'VARUN' ? newTotal * 0.1 : newTotal;
+    const discountedTotal = promoCode === 'NUZHAT' ? newTotal * 0.1 : newTotal;
 
     setTotal(discountedTotal);
   }, [carts, promoCode]);
@@ -59,7 +59,7 @@ const Cart = () => {
 
 
  const handleApplyPromoCode = () => {
-  if (promoCode === 'VARUN') {
+  if (promoCode === 'NUZHAT') {
     setDiscount(total * 0.1);
     setIsPromoCodeValid(true);
     toast.success('PROMOCODE has been used Successfully...');
